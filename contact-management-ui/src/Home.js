@@ -1,20 +1,18 @@
-export function Home(){
+export function Home({user}){
     return(<div className="container" style={{ backgroundColor: '#FFFFFF', borderRadius: '5px'}}>
     <div className="jumbotron text-center">
-  <h1>Welcome To This Page</h1>
-  <p>Resize this responsive page to see the effect!</p> 
+  <h1>Successfully logged in user {user.name}</h1> 
 </div>
 
 
 <nav  className="navbar navbar-dark bg-dark" style={{ backgroundColor: 'coral', borderRadius: '25px'}}>
   <div className="container-fluid">
-    <div className="container-fluid">
-      <a className="navbar-brand" href="http://localhost:3000" style={{ color: 'white', lineHeight : 4, padding: 20 }}>WebSiteName</a>
+    {/* <div className="container-fluid">
       <a className="navbar-brand" href="http://localhost:3000" style={{ color: 'white', lineHeight : 4, padding: 20 }}>Home</a>
       <a className="navbar-brand" href="http://localhost:3000/fetch/" style={{ color: 'white', lineHeight : 4, padding: 20 }}>Show Users</a>
       <a className="navbar-brand" href="http://localhost:3000/store/" style={{ color: 'white', lineHeight : 4, padding: 20 }}>Save User</a>
       <a className="navbar-brand" href="http://localhost:3000/update/" style={{ color: 'white', lineHeight : 4, padding: 20 }}>Update User</a>
-    </div>
+    </div> */}
     {/* <div className="dropdown">
       <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
         Dropdown button

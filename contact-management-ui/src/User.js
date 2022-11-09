@@ -1,17 +1,18 @@
 import axios from "axios";
 import {useState,useEffect} from 'react';
-import { LoginControl } from "./components/LoginControl";
-import { UserDashboard } from "./components/UserDashboad";
-import { GuestDashboard } from "./components/GuestDashboard"
+// import { LoginControl } from "./components/LoginControl";
+// import { UserDashboard } from "./components/UserDashboad";
+// import { GuestDashboard } from "./components/GuestDashboard"
 import { Home } from "./Home";
 import {Link, Route, Routes} from 'react-router-dom';
 import { Dashboard } from "./components/Dashboard";
-import { HomePage } from "./components/HomePage";
+import  {SearchBar}  from "./components/SearchBar";
+// import { HomePage } from "./components/HomePage";
 
-export function DeleteUser(props) {
+export function DeleteUser({profileId, contactId}) {
     let handleClick = () => {
-        console.log(props);
-        let url = `http://localhost:3001/profiles/${props.profileId}`;
+        console.log(profileId);
+        let url = `http://localhost:3001/profiles/${profileId}/${contactId}`;
         axios.delete(url)
         .then(res => {console.log(res); window.location.reload(false)})
         .catch(err => console.log(err))
@@ -44,7 +45,7 @@ export function ShowContact(props) {
                     users.map((item, index) => {
                         return <tr key = {index}>
                             <td>{item._id}</td><td>{item.name}</td><td>{item.phn}</td>
-                            <td><DeleteUser profileId = {item._id} /></td>
+                            <td><DeleteUser profileId = {item._id} contactId = {props.user._id} /></td>
                         </tr>
                     })
                 }
@@ -191,29 +192,29 @@ export function ProfileLogin() {
     }    
     }
     if(isLoggedIn){
-        // window.location.href = `/${users._id}`;
+        //window.location.href = `/${users._id}/dashboard`;
         return (<div className="container-fluid">
-            <h1 className="text-center">CONTACT MANAGEMENT SYSTEM</h1>
-            <br />
-            <div className="row">
-            <div className="col-3 bg-secondary" style={{ borderRadius: '25px'}}>
+            <h1 className="text-center" style={{ backgroundColor: 'coral', borderRadius: '25px', padding: "20px"}}>CONTACT MANAGEMENT SYSTEM</h1>
+            <div className="row" style={{margin: '5px'}}>
+            <div className="col-3 bg-secondary" style={{ borderRadius: '25px', paddingLeft: '20px'}}>
                 <h3>Name: {users.name}</h3>
                 <h3>Id: {users._id}</h3>
             </div>
-            <div className="col-9">
+            <div className="col-9" >
                 <nav className="navbar navbar-dark bg-primary" style={{ backgroundColor: 'coral', borderRadius: '25px'}}>
-                <Link to = {`/${users._id}/dashboard`} className="navbar-brand">Dashboard</Link> | 
+                 | <Link to = {`/${users._id}/dashboard`} className="navbar-brand" >Dashboard</Link> | 
                 <Link to = {`/${users._id}/addcontact`} className="navbar-brand">Add contacts</Link> | 
                 <Link to = {`/${users._id}/showcontact`} className="navbar-brand">Show all contacts</Link> |
-                <Link to = "/search" className="navbar-brand">Search contact</Link> |
+                <Link to = {`/${users._id}/search`} className="navbar-brand">Search contact</Link> |
                 <Link to = "/logout" className="navbar-brand">Logout</Link> |
                 {/* <Link to = "/user/:id">DeleteUser</Link>  */}
                 </nav>
             <Routes>
-                <Route path = '/' element = {<LogInUser user = {users} />} />
+                <Route path = '/' element = {<Home user = {users} />} />
                 <Route path = {`/${users._id}/showcontact`} element = {<ShowContact user = {users} />} />
                 <Route path = {`/${users._id}/addcontact`} element = {<StoreContact user = {users} />} />
                 <Route path = {`/${users._id}/dashboard`} element = {<Dashboard user = {users} />} />
+                <Route path = {`/${users._id}/search`} element = {<SearchBar user = {users} />} />
             </Routes>    
             <br />
             <input type = "button" value = "logout" className = "btn btn-primary" onClick= {handleLogout}></input>
@@ -323,27 +324,6 @@ export function UserRegistration() {
         </div>
     </div>)
 }
-//success component for user login
-export function LogInUser(props) {
-    return (<div className = 'container-fluid' style={{ backgroundColor: 'white', borderRadius: '5px'}}>
-    <h1 className = 'text-center' >{props.user.name} Dashboard</h1>
-    
-    <hr />
-    <div>
-        
-    
-     <Routes>
-       {/* <Route path = "/logout" element = {window.location.href='/logout'} /> */}
-       {/* <Route path = "/login/addcontact" element = {<StoreContact user = {props.user} />} /> */}
-       <Route path = {`/${props.user._id}/addcontact`} element = {<StoreContact user = {props.user} />} />
-       <Route path = {`/${props.user._id}/showcontact`} element = {<ShowContact user = {props.user} />} />
-       <Route path = '/' element = {<Dashboard user = {props.user}/>} />
-       <Route path = {`/${props.user._id}/dashboard`} element = {<Dashboard user = {props.user}/>} />
-       <Route path = "/search" element = {<UpdateUser />} />
-       {/* <Route path = "/user/:id" element = {<DeleteUser />} /> */}
-     </Routes>
-    </div>
-  </div>)
-    }
+
 
 

@@ -177,31 +177,26 @@ app.delete("/profiles/:id", (request, response) => {
     });
 });
 
-app.delete("/profiles/:pid", (request, response) => {
+app.delete("/profiles/:cid/:id", (request, response) => {
     let id = parseInt(request.params.id);
-    let pid = parseInt(request.params.pid);
+    let cid = parseInt(request.params.cid);
     mongoClient.connect(dbUrl,{useNewUrlParser:true},(err,client)=>{
         if(err) throw err;
         else {
             let db = client.db("contactdb");
-            db.collection("profiles").findOne({_id:pid}, (err, founduser) => {
+            db.collection("profiles").findOne({_id:id}, (err, founduser) => {
                 if(err) throw err;
-                let cid = founduser._id;
-                const id = founduser.mycontacts[0]
-                db.collection("profiles").updateOne({_id: cid},{$pull :{mycontacts:{_id : id._id}}}, function(err, results){
+                
+                db.collection("profiles").updateOne({_id: id},{$pull :{mycontacts:{_id : cid}}}, function(err, results){
+                    client.close();
                 if(!err){
                     console.log("successfully deleted");
-                    res.redirect("data")
+                    //response.redirect(`/showcontact`);
                     } else {
                     console.log("error in deletion");
-                    res.redirect("/2/showcontact");
+                    response.redirect("/showcontact");
                     }
                 });
-                client.close();
-                
-                
-                response.json(result);
-
             });
         }
     });

@@ -12,9 +12,9 @@ function App() {
   return (<div>
     <Routes>
         <Route path = "/login" element = {<ProfileLogin />} />
-        <Route path = "/*" element = {<ProfileLogin />} />
+        <Route path = "*" element = {<ProfileLogin />} />
         <Route path = "/register" element = {<UserRegistration />} />
-        <Route path = "/login/:id/" element = {<LogInUser />} />
+        {/* <Route path = "/login/:id/" element = {<LogInUser />} /> */}
         {/* <Route path = "/addcontact" element = {<StoreContact />} />
         <Route path = "/showcontact" element = {<ShowContact />} /> */}
     </Routes>  
